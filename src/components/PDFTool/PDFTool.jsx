@@ -49,7 +49,7 @@ const defaultLayout = createLayout(ComponentTypes.DOCUMENT, [
   createLayout(ComponentTypes.PAGE),
 ]);
 
-export const ResumeBuilder = () => {
+export const PDFTool = () => {
   const classes = useStyles();
 
   const [layout, setLayout] = useState(defaultLayout);

@@ -2,7 +2,7 @@ import React from 'react';
 import { CssBaseline, ThemeProvider, createTheme } from '@material-ui/core';
 import { indigo, pink } from '@material-ui/core/colors';
 
-import { ResumeBuilder } from '../ResumeBuilder';
+import { PDFTool } from '../PDFTool';
 
 const darkTheme = createTheme({
   palette: {
@@ -25,6 +25,6 @@ const darkTheme = createTheme({
 export const App = () => (
   <ThemeProvider theme={darkTheme}>
     <CssBaseline />
-    <ResumeBuilder />
+    <PDFTool />
   </ThemeProvider>
 );
