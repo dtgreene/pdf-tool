@@ -1,15 +1,18 @@
 import React, { useState, useMemo } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 import { Typography, Box, makeStyles, Tabs, Tab } from '@material-ui/core';
 import update from 'immutability-helper';
-import _ from 'lodash';
 import { useForm } from 'react-hook-form';
+import classNames from 'classnames';
+import _ from 'lodash';
 
 import { ComponentTypes, ComponentChildren } from 'constants';
 import { randomId } from 'utils';
 import { ItemActions, Layout } from './Layout';
 import { LayoutProps } from './LayoutProps';
 import { PDF } from './PDF';
+import { StyleEditor } from './StyleEditor';
+import { Fonts } from './Fonts';
+import { Images } from './Images';
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -19,13 +22,19 @@ const useStyles = makeStyles((theme) => ({
   sidebar: {
     height: '100%',
     width: '400px',
-    padding: theme.spacing(2),
     boxShadow: theme.shadows[2],
     zIndex: 10,
     background: '#121215',
     overflowY: 'auto',
   },
-  row: {
+  sidebarLeft: {
+    padding: theme.spacing(2),
+  },
+  sidebarRight: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  sidebarRow: {
     display: 'flex',
     flexDirection: 'column',
     gap: theme.spacing(1),
@@ -43,11 +52,20 @@ const useStyles = makeStyles((theme) => ({
   tab: {
     minWidth: 'auto',
   },
+  tabPanel: {
+    padding: theme.spacing(2),
+    flex: 1,
+    overflowY: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+  },
 }));
 
 const defaultLayout = createLayout(ComponentTypes.DOCUMENT, [
   createLayout(ComponentTypes.PAGE),
 ]);
+
+const ShowIf = ({ show, children }) => (show ? children : null);
 
 export const PDFTool = () => {
   const classes = useStyles();
@@ -55,8 +73,36 @@ export const PDFTool = () => {
   const [layout, setLayout] = useState(defaultLayout);
   const [selected, setSelected] = useState(layout.id);
   const [layoutProps, setLayoutProps] = useState({});
+  const [fonts, setFonts] = useState([
+    {
+      family: '',
+      id: randomId(),
+      sources: [
+        {
+          url: '',
+          style: 'normal',
+          weight: 'normal',
+          id: randomId(),
+        },
+        {
+          url: '',
+          style: 'normal',
+          weight: 'normal',
+          id: randomId(),
+        },
+      ],
+    },
+  ]);
+  const [images, setImages] = useState([
+    {
+      key: '',
+      url: '',
+      file: null,
+      id: randomId(),
+    },
+  ]);
   const [tab, setTab] = useState(0);
-  
+
   const propContext = useForm({});
 
   const selectedLayout = useMemo(
@@ -165,12 +211,12 @@ export const PDFTool = () => {
 
   const handleTabChange = (_, value) => {
     setTab(value);
-  }
+  };
 
   return (
     <Box className={classes.page}>
-      <Box className={classes.sidebar}>
-        <Box className={classes.row}>
+      <Box className={classNames(classes.sidebar, classes.sidebarLeft)}>
+        <Box className={classes.sidebarRow}>
           <Typography variant="h5">Layout</Typography>
           <Layout
             layout={layout}
@@ -181,7 +227,7 @@ export const PDFTool = () => {
             onAddComponent={handleAddComponent}
           />
         </Box>
-        <Box className={classes.row}>
+        <Box className={classes.sidebarRow}>
           <Box className={classes.between}>
             <Typography variant="h5">Props</Typography>
             <Typography color="textSecondary">{selectedLayout.type}</Typography>
@@ -196,13 +242,22 @@ export const PDFTool = () => {
       <Box className={classes.body}>
         <PDF layout={layout} layoutProps={layoutProps} />
       </Box>
-      <Box className={classes.sidebar}>
-        <Box className={classes.row}>
-          <Tabs variant="fullWidth" value={tab} onChange={handleTabChange}>
-            <Tab value={0} label="Styles" className={classes.tab} />
-            <Tab value={1} label="Fonts" className={classes.tab} />
-            <Tab value={2} label="Images" className={classes.tab} />
-          </Tabs>
+      <Box className={classNames(classes.sidebar, classes.sidebarRight)}>
+        <Tabs variant="fullWidth" value={tab} onChange={handleTabChange}>
+          <Tab value={0} label="Styles" className={classes.tab} />
+          <Tab value={1} label="Fonts" className={classes.tab} />
+          <Tab value={2} label="Images" className={classes.tab} />
+        </Tabs>
+        <Box className={classes.tabPanel}>
+          <ShowIf show={tab === 0}>
+            <StyleEditor />
+          </ShowIf>
+          <ShowIf show={tab === 1}>
+            <Fonts fonts={fonts} />
+          </ShowIf>
+          <ShowIf show={tab === 2}>
+            <Images images={images} />
+          </ShowIf>
         </Box>
       </Box>
     </Box>

@@ -13,7 +13,6 @@ import { ComponentProps, ControlTypes } from 'constants';
 
 const useStyles = makeStyles((theme) => ({
   props: {
-    padding: theme.spacing(1),
     border: `1px solid ${theme.palette.grey[800]}`,
     borderRadius: theme.shape.borderRadius,
   },
@@ -21,9 +20,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    '&:not(:last-child)': {
-      marginBottom: theme.spacing(1),
-    },
+    padding: theme.spacing(1),
+    '&:nth-child(odd)': {
+      background: '#1a1a1e'
+    }
   },
   col: {
     width: '50%',

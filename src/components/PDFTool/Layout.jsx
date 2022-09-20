@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     cursor: 'pointer',
     borderBottom: '1px solid transparent',
-    height: '30px',
+    height: '40px',
     display: 'flex',
     alignItems: 'center',
     '&:hover': {
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   highlight: {
     position: 'absolute',
     width: '100%',
-    height: '30px',
+    height: '40px',
     left: 0,
     background: '#bad8ff',
     opacity: 0.3,

@@ -1,13 +1,13 @@
 import React from 'react';
 import { CssBaseline, ThemeProvider, createTheme } from '@material-ui/core';
-import { indigo, pink } from '@material-ui/core/colors';
+import { blue, pink } from '@material-ui/core/colors';
 
 import { PDFTool } from '../PDFTool';
 
 const darkTheme = createTheme({
   palette: {
     type: 'dark',
-    primary: indigo,
+    primary: blue,
     secondary: pink,
   },
   typography: {
@@ -16,7 +16,7 @@ const darkTheme = createTheme({
   overrides: {
     MuiOutlinedInput: {
       input: {
-        padding: '12px 8px'
+        padding: '8px'
       }
     }
   }

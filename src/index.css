@@ -9,3 +9,7 @@ body {
   color: #fff;
   font-family: Poppins, Arial, Helvetica, sans-serif;
 }
+
+.cm-editor {
+  height: 100%;
+}
