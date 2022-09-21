@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
   deleteButton: {
     borderRadius: '50%',
-    padding: '4px',
+    padding: theme.spacing(0.5),
     minWidth: 0,
     position: 'absolute',
     top: 0,
